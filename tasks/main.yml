@@ -1,0 +1,5 @@
+---
+- name: tasks file for instance
+  include_tasks: "{{ ansible_distribution }}-install.yml"
+- name: configure instance.
+  include_tasks: "configure-{{ ansible_distribution }}.yml"

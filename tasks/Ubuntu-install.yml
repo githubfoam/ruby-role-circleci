@@ -1,0 +1,6 @@
+---
+# tasks file for apache
+- name: Update repositories cache and install `software-properties-common`
+  apt:
+      name: ruby-full
+      update_cache: true

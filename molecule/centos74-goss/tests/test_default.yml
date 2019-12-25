@@ -1,0 +1,17 @@
+# Molecule managed
+
+---
+package:
+  ruby:
+    installed: true
+    versions:
+      - 2.0.0.648
+user:
+  sdn:
+    exists: true
+    uid: 1000
+    gid: 1000
+    groups:
+      - sdn
+    home: /home/sdn
+    # shell: /bin/bash
