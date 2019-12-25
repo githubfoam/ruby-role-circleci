@@ -6,6 +6,10 @@
 Circleci branch:
 [![](https://img.shields.io/circleci/project/github/githubfoam/ruby-role-circleci/circleci.svg?style=plastic)](https://circleci.com/gh/githubfoam/ruby-role-circleci)  
 
+Circleci dev branch:
+
+[![CircleCI](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/dev.svg?style=svg)](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/dev)
+
 ~~~~
 
 ----------------
