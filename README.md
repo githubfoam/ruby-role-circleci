@@ -3,9 +3,9 @@
 
 =========
 
-Circleci dev branch:
+Circleci  branch:
 
-[![CircleCI](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/dev.svg?style=svg)](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/dev)
+[![CircleCI](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/master.svg?style=svg)](https://circleci.com/gh/githubfoam/ruby-role-circleci/tree/master)
 
 ~~~~
 
