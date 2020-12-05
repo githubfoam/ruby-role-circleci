@@ -28,11 +28,10 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
-          name: run tests
+          name: Run tests
           command: |
             . venv/bin/activate
             pip3 install pytest
-            # pip install requests
             python manage.py test
       - store_artifacts:
           path: test-reports
