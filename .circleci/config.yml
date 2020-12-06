@@ -37,7 +37,59 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  build-ruby-role:
+    # branches:
+    #   only:
+    #     - master
+    docker:
+      - image: circleci/python:3.6.1
+    environment:
+      MOLECULE_SCENARIO: centos74-goss    
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+            name: "Update all"
+            command: sudo apt-get -qq update          
+      - run:
+          name: "Install dependencies"
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      # - save_cache:
+      #     paths:
+      #       - ./venv
+      #     key: v1-dependencies-{{ checksum "requirements.txt" }}
+      # - run:
+      #     name: "Run tests"
+      #     command: |
+      #       . venv/bin/activate
+      #       pip3 install pytest
+      #       python manage.py test
+      # - store_artifacts:
+      #     path: test-reports
+      #     destination: test-reports
+
 workflows:
   commit-parallel-workflow:
     jobs:
       - build
+      - build-ruby-role
+
+  scheduled-workflow:
+    triggers:
+      - schedule:        
+          cron: "0 0 1 * *" # execute in the first minute of the month
+          # filters:
+          #   branches:
+          #     only: 
+          #     - feature_circleci    jobs:
+      - build
+      - build-ruby-role
