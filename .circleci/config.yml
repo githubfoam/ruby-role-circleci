@@ -59,7 +59,8 @@ jobs:
             sudo -H pip install virtualenv 
             # sudo pip install --upgrade pip
             virtualenv envmolecule
-            source envmolecule/bin/activate
+            # source envmolecule/bin/activate
+            . envmolecule/bin/activate
             pip install -r requirements.txt
             pip install --upgrade pip
             curl -fsSL https://goss.rocks/install | sudo sh
