@@ -54,6 +54,7 @@ jobs:
       - run:
           name: "Create virtualenv and Install goss"
           command: |
+            pip install virtualenv
             virtualenv --python=$(which python3.6) envmolecule
             source envmolecule/bin/activate
             pip install -r requirements.txt
