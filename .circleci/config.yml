@@ -54,25 +54,28 @@ jobs:
       - run:
           name: "Create virtualenv"
           command: |
-            whoami && ls -lai
+            # whoami && ls -lai
             # sudo -H: set HOME variable to target user's home dir.
             sudo -H pip install virtualenv 
             sudo pip install --upgrade pip
             virtualenv envmolecule
             source envmolecule/bin/activate
             pip install -r requirements.txt
-            # curl -fsSL https://goss.rocks/install | sudo sh
+            curl -fsSL https://goss.rocks/install | sudo sh
+            echo ${MOLECULE_SCENARIO}
+            molecule lint --scenario-name ${MOLECULE_SCENARIO} 
             # python3 -m venv venv
             # . venv/bin/activate
             # pip install -r requirements.txt
-      - run:
-          name: "Install goss"
-          command: |
-            curl -fsSL https://goss.rocks/install | sudo sh 
-      - run:
-          name: "Install goss"
-          command: |
-            molecule lint --scenario-name ${MOLECULE_SCENARIO}                       
+      # - run:
+      #     name: "Install goss"
+      #     command: |
+      #       curl -fsSL https://goss.rocks/install | sudo sh 
+      # - run:
+      #     name: "Install goss"
+      #     command: |
+      #       # molecule: command not found
+      #       molecule lint --scenario-name ${MOLECULE_SCENARIO}                       
       # - save_cache:
       #     paths:
       #       - ./venv
