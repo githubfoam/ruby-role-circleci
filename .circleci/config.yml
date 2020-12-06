@@ -55,10 +55,10 @@ jobs:
           name: "Create virtualenv and Install goss"
           command: |
             whoami && ls -lai
-            # pip install virtualenv
-            sudo -H pip install virtualenv
+            # sudo -H: set HOME variable to target user's home dir.
+            sudo -H pip install virtualenv 
             sudo pip install --upgrade pip
-            # virtualenv --python=$(which python3.6) envmolecule
+            virtualenv --python=$(which python3.6) envmolecule
             # source envmolecule/bin/activate
             # pip install -r requirements.txt
             # curl -fsSL https://goss.rocks/install | sudo sh
