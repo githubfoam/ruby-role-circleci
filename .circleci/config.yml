@@ -3,9 +3,6 @@ version: 2.1
 jobs:
 
   build:
-    # branches:
-    #   only:
-    #     - master
     docker:
       - image: circleci/python:3.6.1
     working_directory: ~/repo
@@ -38,9 +35,6 @@ jobs:
           destination: test-reports
 
   build-ruby-role:
-    # branches:
-    #   only:
-    #     - master
     docker:
       - image: circleci/python:3.6.1
     environment:
@@ -58,11 +52,15 @@ jobs:
             name: "Update all"
             command: sudo apt-get -qq update          
       - run:
-          name: "Install dependencies"
+          name: "Create virtualenv and Install goss"
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
+            virtualenv --python=$(which python3.6) envmolecule
+            source envmolecule/bin/activate
             pip install -r requirements.txt
+            curl -fsSL https://goss.rocks/install | sudo sh
+            # python3 -m venv venv
+            # . venv/bin/activate
+            # pip install -r requirements.txt
       # - save_cache:
       #     paths:
       #       - ./venv
@@ -83,13 +81,13 @@ workflows:
       - build
       - build-ruby-role
 
-  scheduled-workflow:
-    triggers:
-      - schedule:        
-          cron: "0 0 1 * *" # execute in the first minute of the month
-          # filters:
-          #   branches:
-          #     only: 
-          #     - feature_circleci    jobs:
-      - build
-      - build-ruby-role
+  # scheduled-workflow:
+  #   triggers:
+  #     - schedule:        
+  #         cron: "0 0 1 * *" # execute in the first minute of the month
+  #         # filters:
+  #         #   branches:
+  #         #     only: 
+  #         #     - feature_circleci    jobs:
+  #     - build
+  #     - build-ruby-role
