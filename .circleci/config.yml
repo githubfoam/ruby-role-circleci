@@ -61,10 +61,10 @@ jobs:
             virtualenv envmolecule
             # source envmolecule/bin/activate
             . envmolecule/bin/activate
-            pip install -r requirements.txt
-            pip install --upgrade pip
-            curl -fsSL https://goss.rocks/install | sudo sh
-            molecule lint --scenario-name ${MOLECULE_SCENARIO} 
+            # pip install -r requirements.txt
+            # pip install --upgrade pip
+            # curl -fsSL https://goss.rocks/install | sudo sh
+            # molecule lint --scenario-name ${MOLECULE_SCENARIO} 
             # python3 -m venv venv
             # . venv/bin/activate
             # pip install -r requirements.txt
