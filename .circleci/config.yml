@@ -55,8 +55,9 @@ jobs:
           name: "Create virtualenv and Install goss"
           command: |
             whoami && ls -lai
-            pip install virtualenv
+            # pip install virtualenv
             sudo -H pip install virtualenv
+            pip install --upgrade pip
             # virtualenv --python=$(which python3.6) envmolecule
             # source envmolecule/bin/activate
             # pip install -r requirements.txt
