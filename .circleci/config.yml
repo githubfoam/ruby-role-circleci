@@ -54,11 +54,12 @@ jobs:
       - run:
           name: "Create virtualenv and Install goss"
           command: |
+            whoami && ls -lai
             pip install virtualenv
-            virtualenv --python=$(which python3.6) envmolecule
-            source envmolecule/bin/activate
-            pip install -r requirements.txt
-            curl -fsSL https://goss.rocks/install | sudo sh
+            # virtualenv --python=$(which python3.6) envmolecule
+            # source envmolecule/bin/activate
+            # pip install -r requirements.txt
+            # curl -fsSL https://goss.rocks/install | sudo sh
             # python3 -m venv venv
             # . venv/bin/activate
             # pip install -r requirements.txt
