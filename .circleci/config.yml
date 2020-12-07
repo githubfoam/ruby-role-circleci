@@ -54,42 +54,22 @@ jobs:
       - run:
           name: "Create virtualenv"
           command: |
-            # whoami && ls -lai
             # sudo -H: set HOME variable to target user's home dir.
             sudo -H pip install virtualenv 
-            # sudo pip install --upgrade pip
             virtualenv envmolecule
             # source envmolecule/bin/activate
             . envmolecule/bin/activate
-            # pip install -r requirements.txt
-            # pip install --upgrade pip
-            # curl -fsSL https://goss.rocks/install | sudo sh
-            # molecule lint --scenario-name ${MOLECULE_SCENARIO} 
-            # python3 -m venv venv
-            # . venv/bin/activate
-            # pip install -r requirements.txt
-      # - run:
-      #     name: "Install goss"
-      #     command: |
-      #       curl -fsSL https://goss.rocks/install | sudo sh 
-      # - run:
-      #     name: "Install goss"
-      #     command: |
-      #       # molecule: command not found
-      #       molecule lint --scenario-name ${MOLECULE_SCENARIO}                       
-      # - save_cache:
-      #     paths:
-      #       - ./venv
-      #     key: v1-dependencies-{{ checksum "requirements.txt" }}
-      # - run:
-      #     name: "Run tests"
-      #     command: |
-      #       . venv/bin/activate
-      #       pip3 install pytest
-      #       python manage.py test
-      # - store_artifacts:
-      #     path: test-reports
-      #     destination: test-reports
+      - run:
+          name: "Install goss"
+          command: |
+            curl -fsSL https://goss.rocks/install | sudo sh                 
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
 
 workflows:
   commit-parallel-workflow:
