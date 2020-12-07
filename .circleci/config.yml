@@ -84,7 +84,7 @@ workflows:
           filters:
             branches:
               only: 
-              - master    
-  jobs:
-      - build
-      - build-ruby-role
+              - master 
+    jobs:
+        - build
+        - build-ruby-role
