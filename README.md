@@ -6,7 +6,7 @@ Circleci  branch:
 
 ~~~~
 
-image: circleci/python:3.6.1
-
+https://www.ruby-lang.org
+https://rubyinstaller.org/
 
 ~~~~

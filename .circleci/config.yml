@@ -77,13 +77,14 @@ workflows:
       - build
       - build-ruby-role
 
-  # scheduled-workflow:
-  #   triggers:
-  #     - schedule:        
-  #         cron: "0 0 1 * *" # execute in the first minute of the month
-  #         # filters:
-  #         #   branches:
-  #         #     only: 
-  #         #     - feature_circleci    jobs:
-  #     - build
-  #     - build-ruby-role
+  scheduled-workflow:
+    triggers:
+      - schedule:        
+          cron: "0 0 1 * *" # execute in the first minute of the month
+          filters:
+            branches:
+              only: 
+              - master    
+  jobs:
+      - build
+      - build-ruby-role
