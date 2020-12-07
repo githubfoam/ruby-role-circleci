@@ -1,58 +1,89 @@
-# Python CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-python/ for more details
-#
-version: 2
+version: 2.1
+
 jobs:
+
   build:
-    branches:
-      only:
-        - master
     docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-
       - save_cache:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
       - run:
-          name: run tests
+          name: Run tests
           command: |
             . venv/bin/activate
-             python manage.py test
-
+            pip3 install pytest
+            python manage.py test
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+  build-ruby-role:
+    docker:
+      - image: circleci/python:3.6.1
+    environment:
+      MOLECULE_SCENARIO: centos74-goss    
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+            name: "Update all"
+            command: sudo apt-get -qq update          
+      - run:
+          name: "Create virtualenv"
+          command: |
+            # sudo -H: set HOME variable to target user's home dir.
+            sudo -H pip install virtualenv 
+            virtualenv envmolecule
+            # source envmolecule/bin/activate
+            . envmolecule/bin/activate
+      - run:
+          name: "Install goss"
+          command: |
+            curl -fsSL https://goss.rocks/install | sudo sh                 
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+workflows:
+  commit-parallel-workflow:
+    jobs:
+      - build
+      - build-ruby-role
+
+  # scheduled-workflow:
+  #   triggers:
+  #     - schedule:        
+  #         cron: "0 0 1 * *" # execute in the first minute of the month
+  #         # filters:
+  #         #   branches:
+  #         #     only: 
+  #         #     - feature_circleci    jobs:
+  #     - build
+  #     - build-ruby-role
